@@ -592,14 +592,14 @@
           <textarea name="message" placeholder="Where are you now, and what do you want to achieve?"></textarea>
           <div class="err">Please share a few words about your goals.</div>
         </div>
-        <button type="submit" class="btn btn-accent">Send Inquiry <span class="arr">→</span></button>
-        <p class="form-note">Your details are kept private.</p>
+        <button type="submit" class="btn btn-accent">Send via WhatsApp <span class="arr">→</span></button>
+        <p class="form-note">Your inquiry will open WhatsApp to send directly to Alireza.</p>
       </form>
 
       <div class="form-success" id="formSuccess">
         <div class="check">✓</div>
-        <h3>Inquiry received.</h3>
-        <p>I'll review it personally and get back to you within 1–2 business days.</p>
+        <h3>WhatsApp opened!</h3>
+        <p>Complete your message in WhatsApp and send it. Alireza will respond personally.</p>
       </div>
     </div>
   </div>
@@ -698,6 +698,23 @@
       form.querySelector('.invalid')?.scrollIntoView({behavior:'smooth', block:'center'});
       return;
     }
+
+    // Build WhatsApp message
+    const name = form.querySelector('[name="name"]').value;
+    const email = form.querySelector('[name="email"]').value;
+    const interest = form.querySelector('[name="interest"]').value;
+    const level = form.querySelector('[name="level"]').value;
+    const message = form.querySelector('[name="message"]').value;
+    
+    const whatsappMessage = `Hi Alireza! 👋\n\n*New Trading Coaching Inquiry*\n\n*Name:* ${name}\n*Email:* ${email}\n*Interested in:* ${interest}\n*Experience Level:* ${level}\n\n*My Goals:*\n${message}`;
+    
+    const encodedMessage = encodeURIComponent(whatsappMessage);
+    const whatsappURL = `https://wa.me/12368589001?text=${encodedMessage}`;
+    
+    // Open WhatsApp
+    window.open(whatsappURL, '_blank');
+    
+    // Show success message
     form.style.display = 'none';
     success.classList.add('show');
     success.scrollIntoView({behavior:'smooth', block:'center'});
